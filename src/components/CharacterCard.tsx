@@ -1,11 +1,7 @@
 import React from "react";
+import {Character} from "./Main.tsx";
 
-type Character = {
-    id: number;
-    name: string;
-    image: string;
-    species: string;
-};
+
 const CharacterCard: React.FC<{ character: Character }> = ({ character }) => {
     return (
         <div className="character-card">

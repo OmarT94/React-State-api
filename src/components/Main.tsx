@@ -5,7 +5,7 @@ import CharacterCard from "./CharacterCard.tsx";
 
 
 // Definiere den Typ für die Charaktere
-type Character = {
+export type Character = {
     id: number;
     name: string;
     image: string;
@@ -15,7 +15,6 @@ type Character = {
 const App: React.FC = () => {
     const [characters, setCharacters] = useState<Character[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [error, setError] = useState(false);
 
     useEffect(() => {
         const getCharacters = async () => {
@@ -29,14 +28,6 @@ const App: React.FC = () => {
         character.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    useEffect(() => {
-        if (filteredCharacters.length === 0 && searchTerm !== "") {
-            setError(true);
-        } else {
-            setError(false);
-        }
-    }, [filteredCharacters, searchTerm]);
-
     return (
         <div>
             <h1>Rick and Morty Characters!</h1>
@@ -46,9 +37,13 @@ const App: React.FC = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
-            {error && <p>No characters found!</p>}
+
             <div>
-                {filteredCharacters.map((character: Character) => (
+
+                {filteredCharacters.length===0?
+                    <p>No characters found!</p>
+                    :
+                    filteredCharacters.map((character: Character) => (
                     <CharacterCard key={character.id} character={character} />
                 ))}
             </div>
